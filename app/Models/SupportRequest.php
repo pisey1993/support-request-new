@@ -32,6 +32,7 @@ class SupportRequest extends Model
         'attachment3',
         'attachment4',
         'attachment5',
+        'severity_description'
     ];
 
     protected $casts = [
@@ -53,4 +54,11 @@ class SupportRequest extends Model
     {
         return $this->belongsTo(\App\Models\Position::class, 'position', 'id');
     }
+    // app/Models/SupportRequest.php
+
+    public function subTasks()
+    {
+        return $this->hasMany(\App\Models\SubTask::class, 'support_request_id', 'id');
+    }
+
 }

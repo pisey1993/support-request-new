@@ -25,8 +25,9 @@
 
         <!-- Desktop Menu -->
         <div class="hidden lg:flex lg:items-center lg:space-x-6">
-            <a href="home" class="hover:underline">Home</a>
-            <a href="/about" class="hover:underline">About</a>
+            <a href="{{ route('support-requests.index') }}" class="hover:underline">Home</a>
+            <a href="{{ route('support-requests.create') }}" class="hover:underline">Create New Request</a>
+            <a href="{{ route('support-requests.myrequest') }}" class="hover:underline">View Your Ticket</a>
 
             @auth
                 <div x-data="{ dropdownOpen: false }" class="relative">

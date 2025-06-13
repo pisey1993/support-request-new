@@ -23,14 +23,16 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div style="display: none">
-                    <label for="user_id" class="block font-medium mb-1">User ID <span class="text-red-600">*</span></label>
+                    <label for="user_id" class="block font-medium mb-1">User ID <span
+                            class="text-red-600">*</span></label>
                     <input type="number" name="user_id" id="user_id" value="{{ Auth::id() }}"
                            class="w-full border border-gray-300 rounded px-3 py-1.5 focus:ring-blue-400 focus:ring-1"
                            required>
                 </div>
 
                 <div>
-                    <label for="position" class="block font-medium mb-1">Position <span class="text-red-600">*</span></label>
+                    <label for="position" class="block font-medium mb-1">Position <span
+                            class="text-red-600">*</span></label>
                     <input type="text" name="position" id="position" value="{{ Auth::user()->position }}" hidden>
                     <input type="text" name="position_name"
                            value="{{ Auth::user()->positionRelation ? Auth::user()->positionRelation->positions_name : '' }}"
@@ -45,10 +47,18 @@
                     <select name="request_type" id="request_type" required
                             class="w-full border border-gray-300 rounded px-3 py-1.5">
                         <option value="">-- Select Request Type --</option>
-                        <option value="Create System" {{ old('request_type') == 'Create System' ? 'selected' : '' }}>Create System</option>
-                        <option value="Update System" {{ old('request_type') == 'Update System' ? 'selected' : '' }}>Update System</option>
-                        <option value="Maintenance" {{ old('request_type') == 'Maintenance' ? 'selected' : '' }}>Maintenance</option>
-                        <option value="Maintenance" {{ old('request_type') == 'Maintenance' ? 'selected' : '' }}>Repair</option>
+                        <option value="Create System" {{ old('request_type') == 'Create System' ? 'selected' : '' }}>
+                            Create System
+                        </option>
+                        <option value="Update System" {{ old('request_type') == 'Update System' ? 'selected' : '' }}>
+                            Update System
+                        </option>
+                        <option value="Maintenance" {{ old('request_type') == 'Maintenance' ? 'selected' : '' }}>
+                            Maintenance
+                        </option>
+                        <option value="Maintenance" {{ old('request_type') == 'Maintenance' ? 'selected' : '' }}>
+                            Repair
+                        </option>
                     </select>
                 </div>
 
@@ -59,7 +69,8 @@
                     </label>
                     <select name="requester_name" id="requester_name" required
                             class="w-full border border-gray-300 rounded px-3 py-1.5">
-                        <option value="" disabled {{ old('requester_name') ? '' : 'selected' }}>-- Select Requester --</option>
+                        <option value="" disabled {{ old('requester_name') ? '' : 'selected' }}>-- Select Requester --
+                        </option>
 
                         @foreach($users as $user)
                             <option value="{{ $user->name }}"
@@ -161,6 +172,20 @@
                     </div>
                 </div>
             </div>
+            @php
+                $currentUserDepartmentId = auth()->user()?->department_id ?? null;
+            @endphp
+
+            @if($currentUserDepartmentId == 7)
+                <div class="flex items-center mt-4">
+                    <input type="checkbox" id="no_telegram" name="no_telegram" value="1"
+                           class="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500">
+                    <label for="no_telegram" class="ml-2 block text-sm text-gray-700">
+                        Do not send Telegram notification
+                    </label>
+                </div>
+            @endif
+
 
 
             <div class="pt-6 flex justify-center gap-4">
@@ -193,6 +218,7 @@
                 nextGroup.classList.remove('hidden');
             }
         }
+
         $(document).ready(function () {
             $('#requester_name').select2({
                 placeholder: "Select or type requester",
